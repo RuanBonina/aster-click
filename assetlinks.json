@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.ruanbonina.asterclick",
+      "sha256_cert_fingerprints": [
+        "0A:62:23:AF:46:70:06:B3:5E:E9:AC:F2:73:C5:7C:1D:F7:4D:1C:A6:52:E7:28:AB:02:E5:3A:97:A2:F5:18:56"
+      ]
+    }
+  }
+]
