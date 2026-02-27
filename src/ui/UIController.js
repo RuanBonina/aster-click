@@ -50,8 +50,8 @@ export class UIController {
 
   syncFromSettings() {
     const op = clamp(
-      Math.round((this.settings.value.uiOpacity * 100) / 10) * 10,
-      10,
+      Math.round((this.settings.value.uiOpacity * 100) / 20) * 20,
+      20,
       100,
     );
     this.els.opacityRange.value = String(op);
@@ -71,8 +71,8 @@ export class UIController {
 
     // Reflete no modal
     const op = clamp(
-      Math.round((this.settings.value.uiOpacity * 100) / 10) * 10,
-      10,
+      Math.round((this.settings.value.uiOpacity * 100) / 20) * 20,
+      20,
       100,
     );
     this.els.opacityRange.value = String(op);
@@ -92,8 +92,8 @@ export class UIController {
   }
 
   updateDraftOpacityFromUI() {
-    const raw = Number(this.els.opacityRange.value); // 10..100, step 10
-    const v01 = clamp(raw / 100, 0.1, 1);
+    const raw = Number(this.els.opacityRange.value); // 20..100, step 20
+    const v01 = clamp(raw / 100, 0.2, 1);
     this.draft.uiOpacity = v01;
     this.els.opacityOut.textContent = `${raw}%`;
   }

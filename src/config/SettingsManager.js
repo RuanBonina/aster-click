@@ -24,7 +24,7 @@ export class SettingsManager {
   load() {
     const saved = Storage.loadSettings();
     if (saved && typeof saved.uiOpacity === "number") {
-      this.value.uiOpacity = clamp(saved.uiOpacity, 0.1, 1);
+      this.value.uiOpacity = clamp(saved.uiOpacity, 0.2, 1);
     }
     if (saved && typeof saved.asteroidSpeedLevel === "number") {
       this.value.asteroidSpeedLevel = clamp(saved.asteroidSpeedLevel, 1, 5);
