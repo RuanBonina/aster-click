@@ -128,6 +128,22 @@ export class Game {
     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
   }
 
+  setPauseButtonPausedUI() {
+    if (!this.uiEls.pauseBtn) return;
+    this.uiEls.pauseBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M8 6v12M16 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>`;
+    this.uiEls.pauseBtn.title = "Pausar";
+  }
+
+  setPauseButtonPlayUI() {
+    if (!this.uiEls.pauseBtn) return;
+    this.uiEls.pauseBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M8 6l12 6-12 6V6z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+      </svg>`;
+    this.uiEls.pauseBtn.title = "Retomar";
+  }
+
   start() {
     this.stats.resetRun();
     this.particles.clear();
@@ -139,6 +155,7 @@ export class Game {
     this.ui.hideStart();
 
     this.uiEls.pauseBtn.style.display = "grid";
+    this.setPauseButtonPausedUI();
   }
 
   end() {
@@ -161,6 +178,7 @@ export class Game {
     this.ui.showStart();
 
     this.uiEls.pauseBtn.style.display = "none";
+    this.setPauseButtonPausedUI();
   }
 
   openConfirmEnd() {
@@ -169,13 +187,7 @@ export class Game {
 
     if (!this.clock.paused) {
       this.clock.togglePause(performance.now());
-
-      if (this.uiEls.pauseBtn) {
-        this.uiEls.pauseBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M8 6l12 6-12 6V6z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-      </svg>`;
-        this.uiEls.pauseBtn.title = "Retomar";
-      }
+      this.setPauseButtonPlayUI();
     }
 
     this.confirmPending = true;
@@ -190,12 +202,7 @@ export class Game {
 
     if (this.state === "PLAYING" && this.clock.paused) {
       this.clock.togglePause(performance.now());
-      if (this.uiEls.pauseBtn) {
-        this.uiEls.pauseBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M8 6v12M16 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>`;
-        this.uiEls.pauseBtn.title = "Pausar";
-      }
+      this.setPauseButtonPausedUI();
     }
   }
 
@@ -203,16 +210,8 @@ export class Game {
     if (this.state !== "PLAYING") return;
     if (this.confirmPending) return;
     this.clock.togglePause(performance.now());
-
-    this.uiEls.pauseBtn.innerHTML = this.clock.paused
-      ? `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M8 6l12 6-12 6V6z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-          </svg>` // play
-      : `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M8 6v12M16 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>`; // pause
-
-    this.uiEls.pauseBtn.title = this.clock.paused ? "Retomar" : "Pausar";
+    if (this.clock.paused) this.setPauseButtonPlayUI();
+    else this.setPauseButtonPausedUI();
   }
 
   update(dt) {
