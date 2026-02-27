@@ -222,11 +222,17 @@ input[type="range"] { width: min(260px, 45vw); flex: 0 0 min(260px, 45vw); }
   z-index: 5;
 }
 
-.fieldLabel:hover .hintBox,
 .fieldLabel:focus-within .hintBox,
 .hintBtn.is-open + .hintBox {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fieldLabel:hover .hintBox {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .switch {

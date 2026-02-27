@@ -82,16 +82,25 @@ export class Game {
     this.bindCustomHelpTooltips();
 
     // SLIDERS (não aplicam direto; só atualizam o draft)
-    els.opacityRange.addEventListener("input", () =>
-      this.ui.updateDraftOpacityFromUI(),
-    );
-    els.speedRange.addEventListener("input", () =>
-      this.ui.updateDraftSpeedFromUI(),
-    );
+    const closeHints = () => this.closeCustomHelpTooltips();
 
-    els.difficultyToggle.addEventListener("input", () =>
-      this.ui.updateDraftDifficultyFromUI(),
-    );
+    els.opacityRange.addEventListener("touchstart", closeHints, { passive: true });
+    els.opacityRange.addEventListener("pointerdown", closeHints);
+    els.opacityRange.addEventListener("input", () => {
+      this.closeCustomHelpTooltips();
+      this.ui.updateDraftOpacityFromUI();
+    });
+    els.speedRange.addEventListener("touchstart", closeHints, { passive: true });
+    els.speedRange.addEventListener("pointerdown", closeHints);
+    els.speedRange.addEventListener("input", () => {
+      this.closeCustomHelpTooltips();
+      this.ui.updateDraftSpeedFromUI();
+    });
+
+    els.difficultyToggle.addEventListener("input", () => {
+      this.closeCustomHelpTooltips();
+      this.ui.updateDraftDifficultyFromUI();
+    });
 
     // APPLY
     els.customApplyBtn.addEventListener("click", () => {
@@ -185,7 +194,10 @@ export class Game {
 
     this.helpHintButtons = Array.from(root.querySelectorAll(".hintBtn"));
     this.closeCustomHelpTooltips = () => {
-      this.helpHintButtons.forEach((btn) => btn.classList.remove("is-open"));
+      this.helpHintButtons.forEach((btn) => {
+        btn.classList.remove("is-open");
+        btn.blur();
+      });
     };
 
     this.helpHintButtons.forEach((btn) => {
