@@ -84,9 +84,12 @@
           <output id="speedOut">Nível 3</output>
         </div>
 
-        <div class="row">
+        <div class="row rowToggle">
           <label for="difficultyToggle">Dificuldade</label>
-          <input id="difficultyToggle" type="checkbox" />
+          <label class="switch" for="difficultyToggle" aria-label="Alternar dificuldade progressiva">
+            <input id="difficultyToggle" type="checkbox" />
+            <span class="slider" aria-hidden="true"></span>
+          </label>
           <output id="difficultyOut">Ativa</output>
         </div>
 
