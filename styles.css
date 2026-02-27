@@ -1,4 +1,8 @@
 html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+body {
+  user-select: none;
+  -webkit-user-select: none;
+}
 canvas { display: block; background: #000; cursor: crosshair; }
 
 :root { --uiOpacity: 1; }
