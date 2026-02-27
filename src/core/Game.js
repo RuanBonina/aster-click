@@ -28,6 +28,7 @@ export class Game {
     );
     this.confirmPending = false;
     this.dynamicSpeedMul = 1;
+    this.stars = [];
     this.renderer = new Renderer({ ctx, hud }, this.settings);
     this.ui = new UIController(uiEls, this.settings, this.stats);
 
@@ -123,6 +124,17 @@ export class Game {
     this.canvas.style.width = this.w + "px";
     this.canvas.style.height = this.h + "px";
     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    if (this.state === "PLAYING") this.generateStars();
+  }
+
+  generateStars() {
+    const count = Math.max(80, Math.floor((this.w * this.h) / 12000));
+    this.stars = Array.from({ length: count }, () => ({
+      x: Math.random() * this.w,
+      y: Math.random() * this.h,
+      size: Math.random() < 0.82 ? 1 : 2,
+      a: 0.35 + Math.random() * 0.55,
+    }));
   }
 
   setPauseButtonPausedUI() {
@@ -193,6 +205,7 @@ export class Game {
     this.particles.clear();
     this.asteroids.clear();
     this.dynamicSpeedMul = 1;
+    this.generateStars();
 
     this.clock.start(performance.now());
     this.state = "PLAYING";
@@ -217,6 +230,7 @@ export class Game {
 
     this.particles.clear();
     this.asteroids.clear();
+    this.stars = [];
 
     this.state = "START";
     this.ui.showStart();
@@ -294,6 +308,7 @@ export class Game {
 
   render(now) {
     this.renderer.clear(this.w, this.h);
+    if (this.state === "PLAYING") this.renderer.drawStars(this.stars);
     this.renderer.drawAsteroid(this.asteroids.asteroid);
     this.renderer.drawParticles(this.particles.particles);
     this.renderer.drawRings(this.particles.rings);

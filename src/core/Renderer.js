@@ -12,6 +12,18 @@ export class Renderer {
     this.ctx.clearRect(0, 0, w, h);
   }
 
+  drawStars(stars) {
+    if (!stars || stars.length === 0) return;
+    const ctx = this.ctx;
+
+    for (const s of stars) {
+      ctx.globalAlpha = s.a;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(s.x, s.y, s.size, s.size);
+    }
+    ctx.globalAlpha = 1;
+  }
+
   drawAsteroid(a) {
     if (!a) return;
     const ctx = this.ctx;
