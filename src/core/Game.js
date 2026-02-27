@@ -145,7 +145,7 @@ export class Game {
     this.ui.beginDraftFromSettings();
     this.closeCustomHelpTooltips();
     if (this.uiEls.panel) this.uiEls.panel.style.display = "none";
-    if (this.uiEls.customModal) this.uiEls.customModal.style.display = "block";
+    if (this.uiEls.customModal) this.uiEls.customModal.style.display = "grid";
   }
 
   closeCustomModal() {

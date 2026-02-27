@@ -117,14 +117,19 @@ kbd {
 }
 
 /* Modal personalizar */
-#customModal { position: fixed; inset: 0; z-index: 40; }
+#customModal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+}
 #customBackdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.75); }
 
 #customCard {
   position: relative;
   width: min(520px, calc(100vw - 24px));
-  margin: 0 auto;
-  top: 14vh;
+  margin: 0;
   max-height: calc(100vh - 24px);
   overflow: auto;
   border: 1px solid rgba(255,255,255,0.16);
@@ -254,7 +259,6 @@ input[type="range"] { width: min(260px, 45vw); flex: 0 0 min(260px, 45vw); }
 
 @media (max-width: 640px) {
   #customCard {
-    top: 8px;
     width: calc(100vw - 16px);
     max-height: calc(100vh - 16px);
     border-radius: 14px;
