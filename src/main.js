@@ -17,7 +17,6 @@ const uiEls = {
   lastBox: document.getElementById("last"),
 
   customModal: document.getElementById("customModal"),
-  customBackdrop: document.getElementById("customBackdrop"),
   customCard: document.getElementById("customCard"),
   customCloseBtn: document.getElementById("customCloseBtn"),
   customApplyBtn: document.getElementById("customApplyBtn"),

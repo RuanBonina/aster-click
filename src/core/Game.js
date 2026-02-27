@@ -79,7 +79,6 @@ export class Game {
     els.pauseBtn.addEventListener("click", () => this.togglePause());
     els.customBtn.addEventListener("click", openModal);
     els.customCloseBtn.addEventListener("click", closeModal);
-    els.customBackdrop.addEventListener("click", closeModal);
     this.bindCustomHelpTooltips();
 
     // SLIDERS (não aplicam direto; só atualizam o draft)
@@ -100,17 +99,27 @@ export class Game {
       closeModal();
     });
 
-    // FULLSCREEN
-    els.fsBtn.addEventListener("click", async () => {
-      await Fullscreen.toggle();
-    });
+    // FULLSCREEN (somente web desktop)
+    const touchLikeDevice =
+      /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      (window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+    const fullscreenAvailable = !!document.documentElement.requestFullscreen;
 
-    document.addEventListener("fullscreenchange", () => {
+    if (!touchLikeDevice && fullscreenAvailable) {
+      els.fsBtn.addEventListener("click", async () => {
+        await Fullscreen.toggle();
+      });
+
+      document.addEventListener("fullscreenchange", () => {
+        els.fsBtn.innerHTML = Fullscreen.iconHTML();
+        this.resize();
+      });
+
       els.fsBtn.innerHTML = Fullscreen.iconHTML();
-      this.resize();
-    });
-
-    els.fsBtn.innerHTML = Fullscreen.iconHTML();
+      els.fsBtn.style.display = "grid";
+    } else {
+      els.fsBtn.style.display = "none";
+    }
 
     closeModal();
   }
@@ -186,13 +195,13 @@ export class Game {
     });
 
     document.addEventListener("click", (e) => {
-      if (!this.uiEls.customModal || this.uiEls.customModal.style.display !== "block") return;
+      if (!this.uiEls.customModal || this.uiEls.customModal.style.display === "none") return;
       if (root.contains(e.target)) return;
       this.closeCustomHelpTooltips();
     });
 
     document.addEventListener("touchstart", (e) => {
-      if (!this.uiEls.customModal || this.uiEls.customModal.style.display !== "block") return;
+      if (!this.uiEls.customModal || this.uiEls.customModal.style.display === "none") return;
       if (e.target.closest(".hintBtn")) return;
       const hasOpenHint = this.helpHintButtons.some((btn) => btn.classList.contains("is-open"));
       if (!hasOpenHint) return;
